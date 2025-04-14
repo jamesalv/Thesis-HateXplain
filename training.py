@@ -20,6 +20,7 @@ from sklearn.metrics import (
     recall_score,
 )
 from transformers import BertTokenizer
+# from torch.nn.functional import softmax
 
 # Parameters needed for training
 params = []
@@ -101,7 +102,7 @@ def eval_phase(
 
     logits_all_final = []
     for logits in logits_all:
-        logits_all_final.append(torch.nn.Softmax(logits))
+        logits_all_final.append(softmax(logits))
 
     testf1 = f1_score(true_labels, pred_labels, average="macro")
     testacc = accuracy_score(true_labels, pred_labels)
