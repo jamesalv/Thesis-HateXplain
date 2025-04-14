@@ -101,7 +101,7 @@ def eval_phase(
 
     logits_all_final = []
     for logits in logits_all:
-        logits_all_final.append(torch.nn.softmax(logits))
+        logits_all_final.append(torch.nn.Softmax(logits))
 
     testf1 = f1_score(true_labels, pred_labels, average="macro")
     testacc = accuracy_score(true_labels, pred_labels)
