@@ -131,6 +131,7 @@ def train_model(params, device):
     # Auto weights will do weighting based on the frequency of the class, this is done
     # to handle imbalance in the class
     if params["auto_weights"]:
+        print(f"Classes: {np.unique(y_test)}")
         y_test = [row[-1] for row in test]
         encoder = LabelEncoder()
         encoder.classes_ = np.load(params["class_names"], allow_pickle=True)

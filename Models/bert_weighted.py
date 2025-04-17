@@ -6,6 +6,8 @@ from Utils.utils import masked_cross_entropy
 
 class Weighted_BERT(BertPreTrainedModel):
     def __init__(self, config, params):
+        print(f"Config Params: {config}")
+        print(f"Model Params: {params}")
         super().__init__(config)
         self.num_labels = config.num_labels
         # Parse string weights if needed
