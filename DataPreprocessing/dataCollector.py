@@ -215,6 +215,8 @@ def preprocess_entry(key: str, value: Dict[str, Any], params: Dict[str, Any], to
     if params['num_classes'] == 2:
         if data_dict['final_label'] in ('hatespeech', 'offensive'):
             data_dict['final_label'] = 'toxic'
+        else:
+            data_dict['final_label'] = 'non-toxic'
     
     # Process target groups (remove duplicates)
     data_dict["target_groups"] = list(set(target_groups))
