@@ -353,11 +353,14 @@ def train_model(params, device):
     return 1
 
 
-def train(path):
+def train(path, custom_params):
     # Loading params
     params = load_params(path)
     print(f"Training parameters: {params}")
     params['path'] = 'Data/dataset.json'
+    
+    for key, value in custom_params.items():
+        params[key] = value
 
     # Set device
     if torch.cuda.is_available():
