@@ -1,14 +1,14 @@
 import torch
 import numpy as np
 import json
-from dataSplitter import splitDataset
+from DataPreprocessing.dataSplitter import splitDataset
 from sklearn.preprocessing import LabelEncoder
 from sklearn.utils import class_weight
-from dataLoader import create_dataloaders
+from DataPreprocessing.dataLoader import create_dataloaders
 from Models.bert_weighted import Weighted_BERT
 from torch.optim import AdamW
 from transformers.optimization import get_linear_schedule_with_warmup
-from utils import *
+from Utils.utils import *
 import neptune
 import time
 from tqdm import tqdm
@@ -20,25 +20,9 @@ from sklearn.metrics import (
     recall_score,
 )
 from transformers import BertTokenizer
-# from torch.nn.functional import softmax
-
+from Utils.paramsLoader import *
 # Parameters needed for training
 params = []
-
-
-def load_params(path):
-    with open(path, mode="r") as f:
-        params = json.load(f)
-    for key in params:
-        if params[key] == "True":
-            params[key] = True
-        elif params[key] == "False":
-            params[key] = False
-        else:
-            params[key] = params[key]
-
-    return params
-
 
 def eval_phase(
     params, which_files="test", model=None, test_dataloader=None, device=None
@@ -48,17 +32,9 @@ def eval_phase(
         model.eval()
     else:
         return 1
-    #         ### Have to modify in the final run
-    #         model=select_model(params['what_bert'],params['path_files'],params['weights'])
-    #         model.cuda()
-    #         model.eval()
 
     print("Running eval on ", which_files, "...")
     t0 = time.time()
-
-    # Put the model in evaluation mode--the dropout layers behave differently
-    # during evaluation.
-    # Tracking variables
 
     true_labels = []
     pred_labels = []
@@ -382,8 +358,7 @@ def train(path):
     params = load_params(path)
     print(f"Training parameters: {params}")
     params['path'] = 'Data/dataset.json'
-    params['num_classes'] = 3
-    params['class_names'] = 'Data/classes.npy'
+
     # Set device
     if torch.cuda.is_available():
         print(f"Using GPU: {torch.cuda.device.__name__}")

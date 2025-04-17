@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 from transformers.models.bert.modeling_bert import BertPreTrainedModel, BertModel
-from utils import masked_cross_entropy
+from Utils.utils import masked_cross_entropy
 
 
 class Weighted_BERT(BertPreTrainedModel):

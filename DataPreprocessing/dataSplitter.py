@@ -1,4 +1,4 @@
-from dataCollector import collect_data
+from DataPreprocessing.dataCollector import collect_data
 import json
 
 def splitDataset(params):

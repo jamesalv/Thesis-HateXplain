@@ -4,8 +4,8 @@ import numpy as np
 from collections import Counter
 from typing import Dict, List, Tuple, Union, Any
 from transformers import BertTokenizer
-from textPreprocess import ek_extra_preprocess
-from utils import softmax, neg_softmax, sigmoid
+from DataPreprocessing.textPreprocess import ek_extra_preprocess
+from Utils.utils import softmax, neg_softmax, sigmoid
 
 
 def process_rationale_mask(text_tokens: List[str], mask: List[int]) -> Tuple[List[str], List[int]]:
