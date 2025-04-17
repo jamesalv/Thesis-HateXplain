@@ -8,7 +8,12 @@ class Weighted_BERT(BertPreTrainedModel):
     def __init__(self, config, params):
         super().__init__(config)
         self.num_labels = config.num_labels
-        self.weights = params["weights"]
+        # Parse string weights if needed
+        if isinstance(params["weights"], str):
+            import ast
+            self.weights = ast.literal_eval(params["weights"])
+        else:
+            self.weights = params["weights"]
         self.train_att = params["train_att"]
         self.att_lambda = params["att_lambda"]
         self.num_sv_heads = params["num_supervised_heads"]
@@ -30,6 +35,18 @@ class Weighted_BERT(BertPreTrainedModel):
         labels=None,
         device=None,
     ):
+        # Add debug print statements
+        print(f"DEBUG - self.weights type: {type(self.weights)}")
+        print(f"DEBUG - self.weights value: {self.weights}")
+        print(f"DEBUG - self.num_labels: {self.num_labels}")
+
+        # Try to convert weights to tensor and print
+        try:
+            weight_tensor = torch.tensor(self.weights)
+            print(f"DEBUG - weight tensor shape: {weight_tensor.shape}")
+        except Exception as e:
+            print(f"DEBUG - Error converting weights to tensor: {e}")
+
         outputs = self.bert(
             input_ids,
             attention_mask=attention_mask,
